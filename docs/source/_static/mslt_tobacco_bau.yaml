@@ -1,0 +1,73 @@
+plugins:
+    optional:
+        data:
+            controller: "vivarium_public_health.dataset_manager.ArtifactManager"
+            builder_interface: "vivarium_public_health.dataset_manager.ArtifactManagerInterface"
+
+components:
+    vivarium_public_health:
+        mslt:
+            population:
+                - BasePopulation()
+                - Mortality()
+                - Disability()
+            delay:
+                - DelayedRisk('tobacco')
+            disease:
+                - Disease('CHD')
+                - Disease('Stroke')
+                - Disease('LungCancer')
+                - Disease('HeadNeckCancer')
+                - Disease('OesophagusCancer')
+                - Disease('StomachCancer')
+                - Disease('LiverCancer')
+                - Disease('ColorectalCancer')
+                - Disease('PancreasCancer')
+                - Disease('CervicalCancer')
+                - Disease('BladderCancer')
+                - Disease('KidneyCancer')
+                - Disease('EndometrialCancer')
+                - Disease('Melanoma')
+                - Disease('ThyroidCancer')
+                - Disease('COPD')
+                - AcuteDisease('LRTI')
+            observer:
+                - MorbidityMortality()
+                - TobaccoPrevalence()
+
+configuration:
+    input_data:
+        # Change this to "mslt_tobacco_maori_20-years.hdf" for the Maori
+        # population.
+        artifact_path: mslt_tobacco_non-maori_20-years.hdf
+        input_draw_number: 0
+    population:
+        population_size: 44 # Male and female 5-year cohorts, aged 0 to 109.
+    time:
+        start:
+            year: 2011
+        end:
+            year: 2120
+        step_size: 365  # In days
+    tobacco:
+        delay: 20  # The delay (in years) between cessation and normal risks.
+        affects:
+            # This is where the affected diseases should be listed.
+            CHD:
+            COPD:
+            BladderCancer:
+            CervicalCancer:
+            ColorectalCancer:
+            EndometrialCancer:
+            KidneyCancer:
+            LiverCancer:
+            LungCancer:
+            OesophagusCancer:
+            PancreasCancer:
+            StomachCancer:
+            ThyroidCancer:
+            LRTI:
+            Melanoma:
+            Stroke:
+    observer:
+        output_prefix: mslt_tobacco_bau # The prefix for output files.

@@ -1,0 +1,41 @@
+plugins:
+    optional:
+        data:
+            controller: "vivarium_public_health.dataset_manager.ArtifactManager"
+            builder_interface: "vivarium_public_health.dataset_manager.ArtifactManagerInterface"
+
+components:
+    vivarium_public_health:
+        mslt:
+            population:
+                - BasePopulation()
+                - Mortality()
+                - Disability()
+            disease:
+                - Disease('CHD')
+            intervention:
+                - ModifyDiseaseIncidence('reduce_chd', 'CHD')
+            observer:
+                - MorbidityMortality()
+                - Disease('CHD')
+
+configuration:
+    input_data:
+        # Change this to "mslt_tobacco_maori_20-years.hdf" for the Maori
+        # population.
+        artifact_path: mslt_tobacco_non-maori_20-years.hdf
+        input_draw_number: 0
+    population:
+        population_size: 44 # Male and female 5-year cohorts, aged 0 to 109.
+    time:
+        start:
+            year: 2011
+        end:
+            year: 2120
+        step_size: 365  # In days
+    intervention:
+        reduce_chd:
+            # Reduce the CHD incidence rate by 5%.
+            CHD_incidence_scale: 0.95
+    observer:
+        output_prefix: mslt_reduce_chd # The prefix for output files.

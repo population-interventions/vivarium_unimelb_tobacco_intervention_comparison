@@ -1,0 +1,52 @@
+plugins:
+    optional:
+        data:
+            controller: "vivarium_public_health.dataset_manager.ArtifactManager"
+            builder_interface: "vivarium_public_health.dataset_manager.ArtifactManagerInterface"
+
+components:
+    vivarium_public_health:
+        mslt:
+            population:
+                - BasePopulation()
+                - Mortality()
+                - Disability()
+            disease:
+                - Disease('CHD')
+            observer:
+                - AdjustedPYandLE('simple_chd_only_haly.csv')
+                - MorbidityMortality('simple_chd_only_mm.csv')
+                - Disease('CHD', 'simple_chd_only_chd.csv')
+
+configuration:
+    input_data:
+        artifact_path: ../tobacco_data_non-maori_decr_20yrs.hdf
+    population:
+        population_size: 220 # Males and females, aged 0 to 109.
+    time:
+        start:
+            year: 2011
+        end:
+            year: 2015
+        step_size: 365  # In days
+    tobacco:
+        affects:
+            # This is where the affected diseases should be listed.
+            CHD:
+            COPD:
+            BladderCancer:
+            CervicalCancer:
+            ColorectalCancer:
+            EndometrialCancer:
+            KidneyCancer:
+            LiverCancer:
+            LungCancer:
+            OesophagusCancer:
+            PancreasCancer:
+            StomachCancer:
+            ThyroidCancer:
+            LRTI:
+            Melanoma:
+            Stroke:
+    tobacco_eradication:
+        year: 2020
