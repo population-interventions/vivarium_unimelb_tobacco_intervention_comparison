@@ -7,10 +7,10 @@ import os.path
 from vivarium_public_health.dataset_manager import hdf
 from vivarium_public_health.dataset_manager.artifact import Artifact
 
-from .population import Population
-from .disease import Diseases
-from .risk_factor import Tobacco
-from .uncertainty import Normal, Beta, LogNormal, LogNormalRawSD
+from vivarium_unimelb_tobacco_intervention_comparison.external_data.population import Population
+from vivarium_unimelb_tobacco_intervention_comparison.external_data.disease import Diseases
+from vivarium_unimelb_tobacco_intervention_comparison.external_data.risk_factor import Tobacco
+from vivarium_unimelb_tobacco_intervention_comparison.external_data.uncertainty import Normal, Beta, LogNormal
 
 
 def assemble_chd_only(num_draws):

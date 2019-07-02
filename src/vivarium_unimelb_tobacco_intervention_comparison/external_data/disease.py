@@ -140,7 +140,6 @@ class Chronic:
         apc = apc.reset_index(drop=True)
         return apc
 
-
     def get_expected_rates(self):
         # NOTE: need to do this separately for each rate, since some rates
         # may have APCs and other rates will not.

@@ -5,7 +5,6 @@ This script generates the simulation definition files for each experiment.
 """
 
 import jinja2
-import os
 import sys
 
 

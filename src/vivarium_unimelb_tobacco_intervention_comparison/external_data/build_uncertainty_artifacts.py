@@ -2,9 +2,9 @@
 
 import logging
 
-import mslt_port.artifact
+from .artifact import assemble_tobacco_artifacts
 
 
 logging.basicConfig(level=logging.INFO)
 num_draws = 2000
-mslt_port.artifact.assemble_tobacco_artifacts(num_draws)
+assemble_tobacco_artifacts(num_draws)

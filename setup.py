@@ -34,6 +34,7 @@ if __name__ == "__main__":
         'jupyterlab',
         'pytest',
         'pytest-mock',
+        'jinja2',
     ]
 
     setup(
