@@ -19,8 +19,6 @@ if __name__ == "__main__":
     install_requirements = [
         'vivarium==0.8.21',
         'vivarium_public_health==0.9.13',
-        'vivarium_cluster_tools==1.0.14',
-        'vivarium_inputs[data]==3.0.0',
 
         # These are pinned for internal dependencies on IHME libraries
         'numpy<=1.15.4',
@@ -44,7 +42,9 @@ if __name__ == "__main__":
         'matplotlib',
         'jupyter',
         'jupyterlab',
-        'jinja2',
+
+        'vivarium_cluster_tools==1.0.14',
+        'vivarium_inputs[data]==3.0.0',
     ]
 
     setup(
