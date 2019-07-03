@@ -1,5 +1,6 @@
-Vivarium Public Health Documentation
-====================================
+========================================
+Vivarium Tobacco Intervention Comparison
+========================================
 
 .. include:: ../../README.rst
    :start-line: 2
@@ -11,4 +12,3 @@ Vivarium Public Health Documentation
    concepts/index
    tutorials/index
    advanced/index
-   api_reference
