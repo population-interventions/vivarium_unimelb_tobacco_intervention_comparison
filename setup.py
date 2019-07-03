@@ -28,12 +28,22 @@ if __name__ == "__main__":
 
         'pandas',
         'scipy',
-        'matplotlib',
-        'seaborn',
-        'jupyter',
-        'jupyterlab',
+        'jinja2',
+    ]
+
+    test_requirements = [
         'pytest',
         'pytest-mock',
+    ]
+
+    extra_requirements = [
+        'sphinx',
+        'sphinx-autodoc-typehints',
+        'sphinx-rtd-theme',
+        'seaborn',
+        'matplotlib',
+        'jupyter',
+        'jupyterlab',
         'jinja2',
     ]
 
@@ -54,6 +64,12 @@ if __name__ == "__main__":
         include_package_data=True,
 
         install_requires=install_requirements,
+        tests_require=test_requirements,
+        extras_require={
+            'test': test_requirements,
+            'extra':  extra_requirements + test_requirements,
+        },
+
 
         zip_safe=False,
     )
