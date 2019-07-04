@@ -6,6 +6,8 @@ Vivarium MSLT Tobacco Intervention Comparison
    :target: https://vivarium-tobacco-intervention-comparison.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
 
+.. image:: https://zenodo.org/badge/194912268.svg
+   :target: https://zenodo.org/badge/latestdoi/194912268
 
 Research repository for the Vivarium MSLT Tobacco Intervention Comparison
 project.
