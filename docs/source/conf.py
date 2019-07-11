@@ -93,6 +93,12 @@ pygments_style = 'sphinx'
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = True
 
+# -- Intersphinx documentation links --------------------------------------
+
+intersphinx_mapping = {
+    'vivarium_public_health': ('https://vivarium.readthedocs.io/projects/vivarium-public-health/en/latest/', None),
+}
+
 
 # -- Options for HTML output ----------------------------------------------
 
@@ -195,4 +201,3 @@ autodoc_member_order = 'bysource'
 # Defaults for automodule and autoclass
 # To negate add `:no-undoc-members:` flag to a particular instance
 autodoc_default_flags = ['members', 'undoc-members' ]
-

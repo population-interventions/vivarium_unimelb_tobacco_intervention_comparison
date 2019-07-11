@@ -1,6 +1,66 @@
 The business-as-usual (BAU) scenario
 ====================================
 
+The business-as-usual (BAU) scenario characterises what we expect to occur in
+the absence of any intervention.
+It comprises a population that are subject to BAU morbidity and mortality
+rates, and is the baseline against which we quantitatively evaluate the impact
+of different interventions.
+
+Defining a simulation
+---------------------
+
+Model simulations are defined by text files that describe all of the
+simulation components and configuration settings.
+These details are written in the YAML markup language, and the file names
+typically have a ``.yaml`` extension.
+
+In the intervention example presented below, we provide a step-by-step
+description of the contents of these YAML files.
+
+In brief, these files will contain three sections:
+
++ The ``plugins`` section, where we load the plugins that allow us to make use
+  of data artefacts;
+
++ The ``components`` section, where we list the simulation components that
+  define the population demographics, the BAU scenario, and the intervention;
+  and
+
++ The ``configuration`` section, where we identify the relevant data artefact,
+  and define component-specific configuration settings and other simulation
+  details.
+
+.. literalinclude:: /_static/mslt_reduce_acmr.yaml
+   :language: yaml
+   :caption: An example simulation definition.
+
+Data artefacts
+--------------
+
+Data artefacts collect all of the required
+:ref:`input data tables <mslt_input_data>` into a single file.
+The input data files that were used to generate the data artefacts for this
+tutorial are stored in the ``mslt_port-master/data`` directory.
+If you modify any of the input data files, you can rebuild these artefacts by
+running the provided script:
+
+.. code:: console
+
+   ./build_minimal_artifacts.py
+
+This will update the follow data artefacts:
+
++ ``mslt_tobacco_maori_20-years.hdf``: data for the Maori population, where
+  cessation of smoking results in gradual recovery over the next 20 years.
++ ``mslt_tobacco_non-maori_20-years.hdf``: data for the non-Maori population,
+  where cessation of smoking results in gradual recovery over the next 20
+  years.
++ ``mslt_tobacco_maori_0-years.hdf``: data for the Maori population, where
+  cessation of smoking results in immediate recovery.
++ ``mslt_tobacco_non-maori_0-years.hdf``: data for the non-Maori population,
+  where cessation of smoking results in immediate recovery.
+
 .. _mslt_reduce_acmr:
 
 Intervention: a reduction in mortality rate
@@ -106,25 +166,32 @@ simulation with the following command:
 When this has completed, the output recorded by the
 :class:`MorbidityMortality` observer will be saved in the file
 ``mslt_reduce_acmr_mm.csv``.
-The contents of this file will look like:
+The contents of this file will contain the following results:
 
 .. csv-table:: An extract of the simulation results, showing a subset of rows
    for the cohort of males aged 50-54 in 2010.
+   :file: ../_static/table_mslt_reduce_acmr_mm.csv
+   :header-rows: 1
 
-   Year of birth,Sex,Age,Year,Population,BAU population,ACMR,BAU ACMR,Probability of death,BAU Probability of death,Deaths,BAU deaths,YLD rate,BAU YLD rate,Person years,BAU person years,HALYs,BAU HALYs
-   ...
-   1958,male,53,2011,129455.99013360904,129435.28592207265,0.0030389592575188165,0.003198904481598754,0.003034346294886081,0.0031937934380235067,394.00986639095765,414.7140779273523,0.112234968131794,0.112234968131794,129652.99506680452,129642.64296103633,115101.39529729007,115092.20505978286
-   1958,male,54,2012,129037.13158471332,128994.49027457157,0.0032407741660891607,0.0034113412274622747,0.0032355285256666644,0.003405529213776126,418.8585488957143,440.79564750108415,0.112234968131794,0.112234968131794,129246.56085916118,129214.8880983221,114740.57721998925,114712.4592504536
-   1958,male,55,2013,128579.02514898572,128512.47741357243,0.0035565076694606492,0.003743692283642789,0.003550190786958507,0.0037366934042930566,458.1064357276018,482.0128609991364,0.130096022623328,0.130096022623328,128808.07836684951,128753.48384407199,112050.65968956845,112003.1676970613
-   ...
-   1958,male,107,2065,304.4733203155968,221.37768288264857,0.45691667748159753,0.4809649236648395,0.3667668995586699,0.38181339895695254,176.35012385274337,136.73050404525435,0.35784212863237896,0.35784212863237896,392.64838224196853,289.7429349052758,252.14224933644252,186.06070632257908
-   1958,male,108,2066,192.8025846251116,136.85271732801016,0.45691667748159753,0.4809649236648395,0.3667668995586699,0.38181339895695254,111.67073569048523,84.52496555463843,0.35784212863237896,0.35784212863237896,248.6379524703542,179.11520010532936,159.66481829956638,115.02023562922379
-   1958,male,109,2067,122.08897843526132,84.60051616850757,0.45691667748159753,0.4809649236648395,0.3667668995586699,0.38181339895695254,70.71360618985027,52.2522011595026,0.35784212863237896,0.35784212863237896,157.44578153018645,110.72661674825886,101.10504792323603,71.10396851480029
-   ...
+We can examine the impact of this intervention on a single cohort (e.g.,
+non-Maori males aged 50-54 in 2011) by filtering the rows by **Year of birth**
+and **Sex**.
+We can then plot columns of interest, such as the LE and HALE for both the BAU
+and intervention scenarios:
 
-We can now plot the survival of this cohort in both the BAU and intervention
-scenarios, relative to the starting population, and see how the survival rate
-has increased as a result of this intervention.
+.. _mslt_reduce_acmr_LE:
+
+.. figure:: /_static/mslt_reduce_acmr_LE.png
+   :alt: The life expectancy in the BAU and intervention scenarios.
+
+   The impact of reducing the all-cause mortality rate by 5% on life
+   expectancy.
+   Results are shown for the cohort of males aged 50-54 in 2011.
+
+With some further data processing, we can also plot the survival of this
+cohort in both the BAU and intervention scenarios, relative to the starting
+population, and see how the survival rate has increased as a result of this
+intervention.
 
 .. _mslt_reduce_acmr_fig:
 
@@ -133,4 +200,4 @@ has increased as a result of this intervention.
       difference between these two rates.
 
    The impact of reducing the all-cause mortality rate by 5% on survival rate.
-   Results are shown for the cohort of males aged 50-54 in 2010.
+   Results are shown for the cohort of males aged 50-54 in 2011.

@@ -1,7 +1,7 @@
 .. _mslt_tutorials:
 
-Multi-State Life Tables: chronic disease interventions
-======================================================
+Tutorials
+=========
 
 In these tutorials, you will learn how to reproduce each of the simulations
 presented in the paper "Multistate lifetable modelling of preventive
@@ -30,13 +30,6 @@ interventions, and to capture different simulation outputs of interest.
    :caption: Tobacco interventions
 
    tobacco_results
-
-.. toctree::
-   :maxdepth: 2
-   :caption: Other model adjustments
-
-   bau_no_delay
-   bau_no_remission
 
 .. toctree::
    :maxdepth: 2

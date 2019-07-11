@@ -1,7 +1,7 @@
 .. _mslt_advanced:
 
-Multi-State Life Tables
-=======================
+Advanced topics
+===============
 
 Here we describe how the multi-state life tables (MSLT) components are
 implemented.
@@ -66,6 +66,8 @@ The following sequence of operations will be performed:
    :caption: Model analysis
 
    uncertainty
+   bau_no_delay
+   bau_no_remission
 
 .. toctree::
    :maxdepth: 2

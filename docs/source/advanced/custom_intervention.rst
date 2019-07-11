@@ -71,13 +71,11 @@ The constructor
 This intervention is currently hard-coded to modify the ``'tobacco'`` risk
 factor, which it stores in ``self.exposure``.
 
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/intervention.py
-   :pyobject: TobaccoEradication.__init__
-
 The setup method
 ^^^^^^^^^^^^^^^^
 
-This method performs a several necessary house-keeping tasks:
+The :py:meth:`~vivarium_public_health.mslt.intervention.TobaccoEradication.setup`
+method performs a several necessary house-keeping tasks:
 
 * It retrieves the year at which the intervention comes into effect
   (specified in the configuration section, as shown above) and stores it in
@@ -92,20 +90,15 @@ This method performs a several necessary house-keeping tasks:
 * It registers a modifier for the ``tobacco_intervention.remission`` rate
   (i.e., the cessation rate in the intervention scenario).
 
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/intervention.py
-   :pyobject: TobaccoEradication.setup
-
 The incidence modifier
 ^^^^^^^^^^^^^^^^^^^^^^
 
-This method, which was registered as a modifier for the
+The :py:meth:`~vivarium_public_health.mslt.intervention.TobaccoEradication.adjust_inc_rate`
+method, which was registered as a modifier for the
 ``tobacco_intervention.incidence`` rate, will set the rate to zero once the
 intervention is active.
 Recall that ``self.year`` is the year at which this intervention comes into
 effect.
-
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/intervention.py
-   :pyobject: TobaccoEradication.adjust_inc_rate
 
 .. note:: Once this intervention becomes active, this rate modifier applies an
    effect on every time-step.
@@ -113,7 +106,8 @@ effect.
 The remission modifier
 ^^^^^^^^^^^^^^^^^^^^^^
 
-This method, which was registered as a modifier for the
+The :py:meth:`~vivarium_public_health.mslt.intervention.TobaccoEradication.adjust_rem_rate`
+method, which was registered as a modifier for the
 ``tobacco_intervention.remission`` rate, will set the rate to one once the
 intervention is active.
 This will have the effect of moving all of the people in the **currently
@@ -121,9 +115,6 @@ smoking** exposure category to the **0 years post-cessation** exposure
 category.
 Recall that ``self.year`` is the year at which this intervention comes into
 effect.
-
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/intervention.py
-   :pyobject: TobaccoEradication.adjust_rem_rate
 
 .. note:: Once this intervention becomes active, this rate modifier applies an
    effect on every time-step.

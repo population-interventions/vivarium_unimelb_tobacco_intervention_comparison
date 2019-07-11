@@ -30,9 +30,9 @@ An observer component will comprise the following methods:
   * Register an end-of-simulation event handler to write the recorded data to
     an output file.
 
-* A time-step event handler.
+* A time-step event handler (``on_collect_metric``).
 
-* An end-of-simulation handler.
+* An end-of-simulation handler (``write_output``).
 
 Example of an observer component
 --------------------------------
@@ -57,15 +57,13 @@ name of the file to which the data will be saved at the end of the simulation:
                    MorbidityMortality('output_file.csv')
 
 So the ``__init__`` method takes two arguments, and stores the name of the
-output file in ``self.output_file``:
-
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/observer.py
-   :pyobject: MorbidityMortality.__init__
+output file in ``self.output_file``.
 
 The setup method
 ^^^^^^^^^^^^^^^^
 
-This method performs a several necessary house-keeping tasks:
+The :py:meth:`~vivarium_public_health.mslt.observer.MorbidityMortality.setup`
+method performs a several necessary house-keeping tasks:
 
 * It identifies the columns that it will observe.
 
@@ -89,13 +87,11 @@ This method performs a several necessary house-keeping tasks:
 * It defines the column ordering for the output table, and stores it in
   ``self.table_cols``.
 
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/observer.py
-   :pyobject: MorbidityMortality.setup
-
 The time-step event handler
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This method records the current values in the specified columns, which is
+The :py:meth:`~vivarium_public_health.mslt.observer.MorbidityMortality.on_collect_metrics`
+method records the current values in the specified columns, which is
 achieved by:
 
 * Retrieving those columns from the underlying population table, using the
@@ -107,13 +103,11 @@ achieved by:
 
 * Adding this table to the list of recorded tables, ``self.tables``.
 
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/observer.py
-   :pyobject: MorbidityMortality.on_collect_metrics
-
 The end-of-simulation event handler
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This method saves the recorded data, by performing the following steps:
+The :py:meth:`~vivarium_public_health.mslt.observer.MorbidityMortality.write_output`
+method saves the recorded data, by performing the following steps:
 
 * Concatenating the tables recorded at each time-step into a single table;
 
@@ -127,9 +121,6 @@ This method saves the recorded data, by performing the following steps:
   (HALE) for each cohort at each time-step; and
 
 * Writing the sorted table to the specified output file.
-
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/observer.py
-   :pyobject: MorbidityMortality.write_output
 
 .. note:: This is also the appropriate method in which to perform any
    post-processing of the data (e.g., calculating life expectancy and other

@@ -67,13 +67,11 @@ name of the risk factor.
 Note that the constructor defines the default configuration settings for this
 component, because this depends on knowing the risk factor's name.
 
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/delay.py
-   :pyobject: DelayedRisk.__init__
-
 The setup method
 ^^^^^^^^^^^^^^^^
 
-This method performs several necessary house-keeping tasks:
+The :py:meth:`~vivarium_public_health.mslt.delay.DelayedRisk.setup`
+method performs several necessary house-keeping tasks:
 
 * It reads the configuration settings.
 
@@ -104,24 +102,21 @@ This method performs several necessary house-keeping tasks:
 * It defines the columns that it will need to access, and stores this view in
   ``self.population_view``.
 
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/delay.py
-   :pyobject: DelayedRisk.setup
-
 The initialization method
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This method creates a column for each of the exposure categories (with
+The :py:meth:`~vivarium_public_health.mslt.delay.DelayedRisk.on_initialize_simulants`
+method creates a column for each of the exposure categories (with
 separate columns for the BAU and intervention scenarios), populates them with
 the initial prevalence values, and updates the underlying table.
-
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/delay.py
-   :pyobject: DelayedRisk.on_initialize_simulants
 
 The rate modifiers
 ^^^^^^^^^^^^^^^^^^
 
 This risk factor can affect an arbitrary number of diseases, and so this
-component includes the following method, which registers modifiers for:
+component includes the
+:py:meth:`~vivarium_public_health.mslt.delay.DelayedRisk.register_modifier`
+method, which registers modifiers for:
 
 * The incidence rate of a chronic disease;
 
@@ -132,23 +127,18 @@ component includes the following method, which registers modifiers for:
 This approach was used because the component is currently unable to identify
 whether each disease that it affects is a chronic disease or an acute disease.
 
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/delay.py
-   :pyobject: DelayedRisk.register_modifier
-
-The rate modifier method calculates the mean relative risk in the BAU and
+The :py:meth:`~vivarium_public_health.mslt.delay.DelayedRisk.incidence_adjustment`
+method calculates the mean relative risk in the BAU and
 intervention scenarios, from which it then calculates the PIF, and modifies
 the un-adjusted rate accordingly.
-
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/delay.py
-   :pyobject: DelayedRisk.incidence_adjustment
 
 The prevalence modifier
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-The prevalence modifier responds to the "time_step__prepare" event, so that
-takes effect **before** the time-step itself, and accounts for the normal
-transitions between exposure categories in both the BAU and intervention
-scenarios:
+The :py:meth:`~vivarium_public_health.mslt.delay.DelayedRisk.on_time_step_prepare`
+method modifies the prevalence, so that it takes effect **before** the
+time-step itself, and accounts for the normal transitions between exposure
+categories in both the BAU and intervention scenarios:
 
 * The incidence rate moves people from the **never smoked** category to the
   **currently smoking** category;
@@ -172,15 +162,11 @@ scenarios:
    and the remission rate in the intervention scenario will be set to zero if
    the ``constant_prevalence``  configuration setting was set to ``True``.
 
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/delay.py
-   :pyobject: DelayedRisk.on_time_step_prepare
-
 The column name method
 ^^^^^^^^^^^^^^^^^^^^^^
 
-For convenience, this component provides this method that returns a list of
+For convenience, this component provides the
+:py:meth:`~vivarium_public_health.mslt.delay.DelayedRisk.get_bin_names`
+method that returns a list of
 the column names for each exposure category, for both the BAU and intervention
 scenarios.
-
-.. literalinclude:: ../../../../src/vivarium_public_health/mslt/delay.py
-   :pyobject: DelayedRisk.get_bin_names
