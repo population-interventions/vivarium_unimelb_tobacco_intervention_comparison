@@ -42,11 +42,17 @@ def make_model_specifications():
 
 
 @click.command()
-@click.option('-d', '--draws', default=5)
-@click.option('-s', '--spawn', default=1)
+@click.option('-d', '--draws', default=5, metavar='NUM',
+              help='The number of draws for which to run simulations')
+@click.option('-s', '--spawn', default=1, metavar='NUM',
+              help='The number of simulations to run in parallel')
 @click.argument('spec_file', type=click.Path(exists=True), nargs=-1)
 def run_uncertainty_analysis(draws, spawn, spec_files):
-    """Run MSLT tobacco intervention simulations simulations for multiple value draws."""
+    """
+    Run MSLT tobacco intervention simulations for multiple value draws.
+
+    You can provide any number of model specification files.
+    """
     logging.basicConfig(level=logging.INFO)
 
     run_many(spec_files, num_draws, num_procs)
