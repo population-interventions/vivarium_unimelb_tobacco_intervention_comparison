@@ -1,4 +1,3 @@
-=============================================
 Vivarium MSLT Tobacco Intervention Comparison
 =============================================
 
@@ -12,21 +11,16 @@ Vivarium MSLT Tobacco Intervention Comparison
 Research repository for the Vivarium MSLT Tobacco Intervention Comparison
 project.
 
-.. contents::
-   :depth: 1
-
 Installation
 ------------
 
 To set up a new research environment, open up a terminal and run::
 
-    $> conda create --name=vivarium_unimelb_tobacco_intervention_comparison python=3.6 redis
+    $> conda create --name=mslt_tobacco python=3.6
     ...standard conda install stuff...
-    $> conda activate vivarium_unimelb_tobacco_intervention_comparison
-    (vivarium_unimelb_tobacco_intervention_comparison) $> git clone git@github.com:ihmeuw/vivarium_unimelb_tobacco_intervention_comparison.git
-    ...you may need to do username/password stuff here...
-    (vivarium_unimelb_tobacco_intervention_comparison) $> cd vivarium_unimelb_tobacco_intervention_comparison
-    (vivarium_unimelb_tobacco_intervention_comparison) $> pip install -e .
+    $> conda activate mslt_tobacco
+    (mslt_tobacco) $> git clone git@github.com:ihmeuw/vivarium_unimelb_tobacco_intervention_comparison.git
+    (mslt_tobacco) $> cd vivarium_unimelb_tobacco_intervention_comparison
+    (mslt_tobacco) $> pip install -e .
 
-
-
+See the :ref:`getting-started` section of the tutorial for further details.

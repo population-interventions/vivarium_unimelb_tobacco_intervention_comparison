@@ -1,42 +1,79 @@
+.. _getting-started:
+
 Getting started
 ===============
 
-- You need Python 3.6 or later installed. If you don't already have a suitable
-  version of Python installed, the easiest option is to use
-  `Anaconda <https://www.anaconda.com/distribution/>`__.
+1. You need to have Python 3.6 installed. If you don't already have this
+   version of Python installed, the easiest option is to use
+   `Anaconda <https://www.anaconda.com/distribution/>`__.
+   Once Anaconda is installed:
 
-- You need to install the ``vivarium_public_health`` Python package. Do this
-  by running the following command in a command prompt or terminal:
+   1. Create a new virtual environment:
 
-  .. Note that `pip` is the simplest way to do this when using Anaconda.
+      .. code-block:: sh
 
-     https://www.anaconda.com/using-pip-in-a-conda-environment/
+         conda create --name=mslt_tobacco python-3.6
 
-  .. code-block:: sh
+   2. Activate this Conda environment:
 
-     pip install vivarium_public_health
+      .. code-block:: sh
 
-- Download the input data and model specification files
-  `zip archive <https://github.com/collijk/mslt_port/archive/master.zip>`__,
-  and unzip the contents; this will create a new directory called
-  **mslt_port-master**.
+         conda activate mslt_tobacco
 
-  .. note:: This archive contains all of the files you will need in order to
-     follow the tutorials.
+2. Download the Vivarium MSLT Tobacco Intervention Comparison project.
 
-  .. note:: We will probably need to change this link (and the directory name)
-     to a canonical location.
+   - You can clone this project using ``git``; this will create a new
+     directory called **vivarium_unimelb_tobacco_intervention_comparison**.
+
+     .. code-block:: sh
+
+        git clone https://github.com/population-interventions/vivarium_unimelb_tobacco_intervention_comparison.git
+
+   - Alternatively, you download the project as a
+     `zip archive <https://github.com/population-interventions/vivarium_unimelb_tobacco_intervention_comparison/archive/master.zip>`__
+     and unzip its contents; this will create a new directory called
+     **vivarium_unimelb_tobacco_intervention_comparison-master**.
+
+3. Open a terminal and install the project using ``pip``.
+
+   - If you used ``git`` to clone the repository:
+
+      .. code-block:: sh
+
+         cd vivarium_unimelb_tobacco_intervention_comparison
+         pip install -e
+
+   - If you downloaded the zip archive:
+
+      .. code-block:: sh
+
+         cd vivarium_unimelb_tobacco_intervention_comparison-master
+         pip install -e
+
+4. Create the data artifacts, which will be stored in the ``artifacts``
+   directory:
+
+   .. code-block:: sh
+
+      make_artifacts minimal
+
+5. Create the model specification files, which will be stored in the
+   ``model_specifications`` directory:
+
+   .. code-block:: sh
+
+      make_model_specifications
 
 Once you have completed these steps, you will be able to run all of the
 simulations described in these tutorials. For each simulation there will be a
 model specification file, whose file name ends in ``.yaml``. These are
 plain text files, that you can edit in any text editor. To run the simulation
 described in one of these files, run the following command in a command prompt
-or terminal, from within the **mslt_port-master** directory:
+or terminal, from within the project directory:
 
 .. code-block:: sh
 
-   simulate run model_file.yaml
+   simulate run model_specifications/model_file.yaml
 
 .. note:: Each simulation will produce one or more output CSV files. You can
    then extract relevant subsets from these data files and plot them using
