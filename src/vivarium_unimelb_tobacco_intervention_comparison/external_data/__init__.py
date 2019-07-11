@@ -1,3 +1,3 @@
 from .artifact import assemble_tobacco_artifacts
-from .build_simulation_files import create_model_specifications
+from .build_simulation_files import create_model_specifications, create_reduce_acmr_specification, create_reduce_chd_specification
 from .parallel import run_many

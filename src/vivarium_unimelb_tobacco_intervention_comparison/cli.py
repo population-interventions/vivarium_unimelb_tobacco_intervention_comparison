@@ -4,7 +4,9 @@ from pathlib import Path
 import click
 
 from vivarium_unimelb_tobacco_intervention_comparison.external_data import assemble_tobacco_artifacts
-from vivarium_unimelb_tobacco_intervention_comparison.external_data import create_model_specifications
+from vivarium_unimelb_tobacco_intervention_comparison.external_data import (create_model_specifications,
+                                                                            create_reduce_acmr_specification,
+                                                                            create_reduce_chd_specification)
 from vivarium_unimelb_tobacco_intervention_comparison.external_data import run_many
 
 
@@ -26,7 +28,7 @@ def make_artifacts(scenario):
 
 @click.command()
 def make_model_specifications():
-    """Generate artifacts for the MSLT tobacco intervention simulations."""
+    """Generate model specifications for the MSLT tobacco intervention simulations."""
     logging.basicConfig(level=logging.INFO)
 
     output_path = Path('.').resolve() / 'model_specifications'
@@ -35,6 +37,8 @@ def make_model_specifications():
     logging.info(f'Generating model_specifications at {str(output_path)}')
 
     create_model_specifications(output_path)
+    create_reduce_acmr_specification(output_path)
+    create_reduce_chd_specification(output_path)
 
 
 @click.command()

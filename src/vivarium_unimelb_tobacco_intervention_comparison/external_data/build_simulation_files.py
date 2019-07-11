@@ -6,12 +6,14 @@ This script generates the simulation definition files for each experiment.
 
 import jinja2
 
-from .utilities import get_model_specification_template_file
+from .utilities import (get_model_specification_template_file,
+                        get_reduce_acmr_specification_template_file,
+                        get_reduce_chd_specification_template_file)
 
 
 def create_model_specifications(output_dir):
     """
-    Construct the data artifacts requires for the tobacco simulations.
+    Construct the model specifications for the tobacco simulations.
     """
 
     template_file = get_model_specification_template_file()
@@ -59,3 +61,73 @@ def create_model_specifications(output_dir):
                 out_content = template.render(template_args)
                 with out_file.open('w') as f:
                     f.write(out_content)
+
+
+def create_reduce_acmr_specification(output_dir):
+    """
+    Construct the model specifications for the reduced-ACMR simulations.
+    """
+    template_file = get_reduce_acmr_specification_template_file()
+    with template_file.open('r') as f:
+        template_contents = f.read()
+
+    template = jinja2.Template(template_contents,
+                               trim_blocks=True,
+                               lstrip_blocks=True)
+
+    # The output file.
+    out_file = 'mslt_reduce_acmr.yaml'
+
+    # The simulation population.
+    population = 'non-maori'
+
+    # The simulation BAU.
+    (delay, tobacco_prev) = (20, 'decreasing')
+
+    out_file = output_dir / out_file
+
+    template_args = {
+        'output_root': str(out_file.parent.parent),
+        'basename': out_file.stem,
+        'population': population,
+        'delay': delay,
+    }
+
+    out_content = template.render(template_args)
+    with out_file.open('w') as f:
+        f.write(out_content)
+
+
+def create_reduce_chd_specification(output_dir):
+    """
+    Construct the model specifications for the reduced-CHD simulations.
+    """
+    template_file = get_reduce_chd_specification_template_file()
+    with template_file.open('r') as f:
+        template_contents = f.read()
+
+    template = jinja2.Template(template_contents,
+                               trim_blocks=True,
+                               lstrip_blocks=True)
+
+    # The output file.
+    out_file = 'mslt_reduce_chd.yaml'
+
+    # The simulation population.
+    population = 'non-maori'
+
+    # The simulation BAU.
+    (delay, tobacco_prev) = (20, 'decreasing')
+
+    out_file = output_dir / out_file
+
+    template_args = {
+        'output_root': str(out_file.parent.parent),
+        'basename': out_file.stem,
+        'population': population,
+        'delay': delay,
+    }
+
+    out_content = template.render(template_args)
+    with out_file.open('w') as f:
+        f.write(out_content)
