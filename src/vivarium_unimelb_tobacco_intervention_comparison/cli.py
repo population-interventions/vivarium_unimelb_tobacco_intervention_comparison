@@ -5,6 +5,7 @@ import click
 
 from vivarium_unimelb_tobacco_intervention_comparison.external_data import assemble_tobacco_artifacts
 from vivarium_unimelb_tobacco_intervention_comparison.external_data import create_model_specifications
+from vivarium_unimelb_tobacco_intervention_comparison.external_data import run_many
 
 
 @click.command()
@@ -34,3 +35,14 @@ def make_model_specifications():
     logging.info(f'Generating model_specifications at {str(output_path)}')
 
     create_model_specifications(output_path)
+
+
+@click.command()
+@click.option('-d', '--draws', default=5)
+@click.option('-s', '--spawn', default=1)
+@click.argument('spec_file', type=click.Path(exists=True), nargs=-1)
+def run_uncertainty_analysis(draws, spawn, spec_files):
+    """Run MSLT tobacco intervention simulations simulations for multiple value draws."""
+    logging.basicConfig(level=logging.INFO)
+
+    run_many(spec_files, num_draws, num_procs)

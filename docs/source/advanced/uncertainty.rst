@@ -16,16 +16,14 @@ the following command:
 .. note:: This can take a long time to complete, and generates data artifacts
    that are around **3 GB** in size.
 
-.. todo:: Provide an equivalent for the ``run_uncertainty`` script.
-
-We have also provided a script that runs multiple simulations for a single
+We have also provided a command that runs multiple simulations for a single
 model specification file, where each simulation uses a different draw from the
 data artifact.
 This script can be used as follows:
 
 .. code:: console
 
-   ./run_uncertainty --draws 2000 --spawn 16 modelA.yaml modelB.yaml [...]
+   run_uncertainty_analysis --draws 2000 --spawn 16 modelA.yaml modelB.yaml [...]
 
 This will run 2000 simulations for each of the model specifications
 (modelA.yaml, modelB.yaml, etc) and will simultaneously run 16 simulations at

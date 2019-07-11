@@ -75,6 +75,7 @@ if __name__ == "__main__":
             [console_scripts]
             make_artifacts=vivarium_unimelb_tobacco_intervention_comparison.cli:make_artifacts
             make_model_specifications=vivarium_unimelb_tobacco_intervention_comparison.cli:make_model_specifications
+            run_uncertainty_analysis=vivarium_unimelb_tobacco_intervention_comparison.cli:run_uncertainty_analysis
         """,
 
 
