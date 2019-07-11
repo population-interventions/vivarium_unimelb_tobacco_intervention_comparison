@@ -38,7 +38,7 @@ components:
 
 configuration:
     input_data:
-        artifact_path: mslt_tobacco_non-maori_20-years.hdf
+        artifact_path: artifacts/mslt_tobacco_non-maori_20-years.hdf
         input_draw_number: 0
     observer:
         output_prefix: results/mslt_tobacco_non-maori_20-years_decreasing_erad

@@ -6,19 +6,17 @@ Uncertainty analyses
 Uncertainty analyses are a **bespoke process**, because you need to decide
 which input data should be correlated (e.g., the incidence rate for a single
 disease, across all age groups, sex, and ethnicity).
-
-.. note:: To use the scripts documented here, you will need to install the
-   ``mslt_port`` package.
-
-We have provided a script to build data artifacts that contain 2000 draws for
-each input rate/value:
+To build data artifacts that contain 2000 draws for each input rate/value, run
+the following command:
 
 .. code:: console
 
-   ./build_uncertainty_artifacts.py
+   make_artifacts uncertainty
 
-.. note:: This script can take a long time to complete, and generates data
-   artifacts that are around **3 GB** in size.
+.. note:: This can take a long time to complete, and generates data artifacts
+   that are around **3 GB** in size.
+
+.. todo:: Provide an equivalent for the ``run_uncertainty`` script.
 
 We have also provided a script that runs multiple simulations for a single
 model specification file, where each simulation uses a different draw from the

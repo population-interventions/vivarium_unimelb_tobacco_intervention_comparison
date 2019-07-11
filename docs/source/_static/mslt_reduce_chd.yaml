@@ -23,7 +23,7 @@ configuration:
     input_data:
         # Change this to "mslt_tobacco_maori_20-years.hdf" for the Maori
         # population.
-        artifact_path: mslt_tobacco_non-maori_20-years.hdf
+        artifact_path: artifacts/mslt_tobacco_non-maori_20-years.hdf
         input_draw_number: 0
     population:
         # The population size here is the number of cohorts.

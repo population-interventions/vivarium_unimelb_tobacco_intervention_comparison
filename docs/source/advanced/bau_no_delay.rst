@@ -26,7 +26,7 @@ The only changes that we need to make to the simulation definition are:
        input_data:
            # Change this to "mslt_tobacco_maori_data_0-years.hdf" for the Maori
            # population.
-           artifact_path: mslt_tobacco_non-maori_0-years.hdf
+           artifact_path: artifacts/mslt_tobacco_non-maori_0-years.hdf
        # Other configuration settings ...
        tobacco:
            delay: 0

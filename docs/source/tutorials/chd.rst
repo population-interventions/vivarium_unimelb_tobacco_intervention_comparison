@@ -33,7 +33,7 @@ In the configuration settings, we identify this intervention by name
 
 .. literalinclude:: /_static/mslt_reduce_chd.yaml
    :language: yaml
-   :lines: 7-9,16-17,22,34-37
+   :lines: 7-9,16-17,22,39-42
    :caption: Add an intervention that reduces CHD incidence.
 
 .. py:currentmodule:: vivarium_public_health.mslt.observer
@@ -45,7 +45,7 @@ We use the :class:`Disease` observer, identify the disease of interest by name
 
 .. literalinclude:: /_static/mslt_reduce_chd.yaml
    :language: yaml
-   :lines: 7-9,18,20,21-22,38-39
+   :lines: 7-9,18,20,21-22,43-44
    :caption: Record CHD incidence, prevalence, and deaths.
 
 Putting all of these pieces together, we obtain the following simulation
@@ -64,7 +64,7 @@ simulation with the following command:
 
 .. code-block:: console
 
-   simulate run mslt_reduce_chd.yaml
+   simulate run model_specifications/mslt_reduce_chd.yaml
 
 When this has completed, the output recorded by the
 :class:`MorbidityMortality` observer will be saved in the file

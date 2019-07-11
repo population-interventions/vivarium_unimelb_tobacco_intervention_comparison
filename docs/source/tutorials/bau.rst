@@ -41,13 +41,15 @@ Data artefacts
 Data artefacts collect all of the required
 :ref:`input data tables <mslt_input_data>` into a single file.
 The input data files that were used to generate the data artefacts for this
-tutorial are stored in the ``mslt_port-master/data`` directory.
+tutorial are stored in the
+``src/vivarium_unimelb_tobacco_intervention_comparison/external_data/``
+directory.
 If you modify any of the input data files, you can rebuild these artefacts by
 running the provided script:
 
 .. code:: console
 
-   ./build_minimal_artifacts.py
+   make_artifacts minimal
 
 This will update the follow data artefacts:
 
@@ -95,7 +97,7 @@ settings:
 
 .. literalinclude:: /_static/mslt_reduce_acmr.yaml
    :language: yaml
-   :lines: 19-22
+   :lines: 19-23
    :caption: Define the input data artifact.
 
 The core components of the simulation are the population demographics
@@ -114,7 +116,7 @@ the configuration settings:
 
 .. literalinclude:: /_static/mslt_reduce_acmr.yaml
    :language: yaml
-   :lines: 19,23-30
+   :lines: 19,25-32
    :caption: Define the number of cohorts and the simulation time period.
 
 .. py:currentmodule:: vivarium_public_health.mslt.intervention
@@ -129,7 +131,7 @@ the mortality rate scaling factor (``scale``):
 
 .. literalinclude:: /_static/mslt_reduce_acmr.yaml
    :language: yaml
-   :lines: 7-9,14-15,18-19,31-34
+   :lines: 7-9,14-15,18-19,36-39
    :caption: The core population components.
 
 .. py:currentmodule:: vivarium_public_health.mslt.observer
@@ -142,7 +144,7 @@ files (``mslt_reduce_acmr``):
 
 .. literalinclude:: /_static/mslt_reduce_acmr.yaml
    :language: yaml
-   :lines: 7-9,16-17,18-19,35-36
+   :lines: 7-9,16-17,18-19,40-41
    :caption: The core population components.
 
 Putting all of these pieces together, we obtain the following simulation
@@ -161,7 +163,7 @@ simulation with the following command:
 
 .. code-block:: console
 
-   simulate run mslt_reduce_acmr.yaml
+   simulate run model_specifications/mslt_reduce_acmr.yaml
 
 When this has completed, the output recorded by the
 :class:`MorbidityMortality` observer will be saved in the file
