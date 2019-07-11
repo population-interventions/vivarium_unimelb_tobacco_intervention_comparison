@@ -151,8 +151,6 @@ def assemble_tobacco_artifacts(num_draws, output_path: Path, seed: int = RANDOM_
         logger.info('{} Writing population tables'.format(
             datetime.datetime.now().strftime("%H:%M:%S")))
 
-        import pdb; pdb.set_trace()
-
         # Write the main population tables.
         write_table(art_nm, 'population.structure',
                      p_nm.get_population())
