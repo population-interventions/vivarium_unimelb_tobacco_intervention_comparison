@@ -31,15 +31,19 @@ components:
                 - Disease('ThyroidCancer')
                 - Disease('COPD')
                 - AcuteDisease('LRTI')
+            {% if intervention_class is defined %}
+            intervention:
+                - {{ intervention_class }}()
+            {% endif %}
             observer:
                 - MorbidityMortality()
 
 configuration:
     input_data:
-        artifact_path: mslt_tobacco_non-maori_20-years.hdf
+        artifact_path: {{ output_root }}/artifacts/mslt_tobacco_{{ population }}_{{ delay }}-years.hdf
         input_draw_number: 0
     observer:
-        output_prefix: results/mslt_tobacco_non-maori_20-years_decreasing_tax
+        output_prefix: results/{{ basename }}
     population:
         # The population size here is the number of cohorts.
         # There are 22 age bins (0-4, 5-9, ..., 105-109) for females and for
@@ -52,9 +56,9 @@ configuration:
             year: 2120
         step_size: 365  # In days
     tobacco:
-        constant_prevalence: False
-        tobacco_tax: True
-        delay: 20
+        constant_prevalence: {{ constant_prevalence }}
+        tobacco_tax: {{ tobacco_tax }}
+        delay: {{ delay }}
         affects:
             # This is where the affected diseases should be listed.
             CHD:

@@ -18,15 +18,16 @@ if __name__ == "__main__":
 
     install_requirements = [
         'vivarium==0.8.21',
-        'vivarium_public_health==0.9.13',
+        'vivarium_public_health==0.9.15',
 
         # These are pinned for internal dependencies on IHME libraries
         'numpy<=1.15.4',
-        'tables<=3.4.0',
+        'tables<=3.4',
 
         'pandas',
         'scipy',
         'jinja2',
+        'click',
     ]
 
     test_requirements = [
@@ -69,6 +70,12 @@ if __name__ == "__main__":
             'test': test_requirements,
             'extra':  extra_requirements + test_requirements,
         },
+
+        entry_points="""
+            [console_scripts]
+            make_artifacts=vivarium_unimelb_tobacco_intervention_comparison.cli:make_artifacts
+            make_model_specifications=vivarium_unimelb_tobacco_intervention_comparison.cli:make_model_specifications
+        """,
 
 
         zip_safe=False,
