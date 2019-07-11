@@ -1,9 +1,9 @@
 import datetime
 import logging
-import numpy as np
 import os
-import os.path
+from pathlib import Path
 
+import numpy as np
 from vivarium_public_health.dataset_manager import hdf
 from vivarium_public_health.dataset_manager.artifact import Artifact
 
@@ -11,90 +11,10 @@ from vivarium_unimelb_tobacco_intervention_comparison.external_data.population i
 from vivarium_unimelb_tobacco_intervention_comparison.external_data.disease import Diseases
 from vivarium_unimelb_tobacco_intervention_comparison.external_data.risk_factor import Tobacco
 from vivarium_unimelb_tobacco_intervention_comparison.external_data.uncertainty import Normal, Beta, LogNormal
+from vivarium_unimelb_tobacco_intervention_comparison.external_data.utilities import get_data_dir
 
-
-def assemble_chd_only(num_draws):
-    artifact_file = 'test_reduce_chd.hdf'
-
-    year_start = 2011
-    data_dir_maori = './data/maori'
-    data_dir_nonmaori = './data/non-maori'
-    prng = np.random.RandomState(seed=49430)
-
-    def new_samples():
-        return prng.random_sample(num_draws)
-
-    dist_yld = LogNormal(sd_pcnt=10)
-    smp_yld = new_samples()
-
-    dist_chd_apc = Normal(sd_pcnt=0.5)
-    smp_chd_apc = new_samples()
-    dist_chd_i = Normal(sd_pcnt=5)
-    smp_chd_i = new_samples()
-    dist_chd_r = Normal(sd_pcnt=5)
-    smp_chd_r = new_samples()
-    dist_chd_f = Normal(sd_pcnt=5)
-    smp_chd_f = new_samples()
-    dist_chd_yld = Normal(sd_pcnt=10)
-    smp_chd_yld = new_samples()
-    dist_chd_prev = Normal(sd_pcnt=5)
-    smp_chd_prev = new_samples()
-
-    # Instantiate components for the non-Maori population.
-    p_nm = Population(data_dir_nonmaori, year_start)
-    l_nm = Diseases(data_dir_nonmaori, year_start, p_nm.year_end)
-
-    # Create a new artifact file, replacing any existing file.
-    if os.path.exists(artifact_file):
-        os.remove(artifact_file)
-    hdf.touch(artifact_file, append=False)
-    art = Artifact(artifact_file)
-
-    # 'population.structure'
-    popn_nm = p_nm.get_population()
-    art.write('population.structure',
-              popn_nm)
-    # 'cause.all_causes.disability_rate'
-    popn_yld_nm = p_nm.sample_disability_rate_from(dist_yld, smp_yld)
-    art.write('cause.all_causes.disability_rate',
-              popn_yld_nm)
-    # 'cause.all_causes.mortality'
-    popn_acmr_nm = p_nm.get_mortality_rate()
-    art.write('cause.all_causes.mortality',
-              popn_acmr_nm)
-
-    name = 'CHD'
-    disease = l_nm.chronic[name]
-
-    # 'chronic_disease.{}.incidence'
-    chd_i = disease.sample_i_from(
-        dist_chd_i, dist_chd_apc,
-        smp_chd_i, smp_chd_apc)
-    art.write('chronic_disease.CHD.incidence',
-              check_for_bin_edges(chd_i))
-    # 'chronic_disease.{}.remission'
-    chd_r = disease.sample_r_from(
-        dist_chd_r, dist_chd_apc,
-        smp_chd_r, smp_chd_apc)
-    art.write('chronic_disease.CHD.remission',
-              check_for_bin_edges(chd_r))
-    # 'chronic_disease.{}.mortality'
-    chd_f = disease.sample_f_from(
-        dist_chd_f, dist_chd_apc,
-        smp_chd_f, smp_chd_apc)
-    art.write('chronic_disease.CHD.mortality',
-              check_for_bin_edges(chd_f))
-    # 'chronic_disease.{}.morbidity'
-    chd_yld = disease.sample_yld_from(
-        dist_chd_yld, dist_chd_apc,
-        smp_chd_yld, smp_chd_apc)
-    art.write('chronic_disease.CHD.morbidity',
-              check_for_bin_edges(chd_yld))
-    # 'chronic_disease.{}.prevalence'
-    chd_prev = disease.sample_prevalence_from(
-        dist_chd_prev, smp_chd_prev)
-    art.write('chronic_disease.CHD.prevalence',
-              check_for_bin_edges(chd_prev))
+YEAR_START = 2011
+RANDOM_SEED = 49430
 
 
 def check_for_bin_edges(df):
@@ -109,31 +29,37 @@ def check_for_bin_edges(df):
         raise ValueError('Table does not have bins')
 
 
-def assemble_tobacco_artifacts(num_draws, seed=49430):
+def assemble_tobacco_artifacts(num_draws, output_path: Path, seed: int = RANDOM_SEED):
     """
     Assemble the data artifacts required to simulate the various tobacco
     interventions.
 
-    :param num_draws: The number of random draws to sample for each rate
-        and quantity, for the uncertainty analysis.
-    :param seed: The seed for the pseudo-random number generator used to
-        generate the random samples.
+    Parameters
+    ----------
+    num_draws
+        The number of random draws to sample for each rate and quantity,
+        for the uncertainty analysis.
+    output_path
+        The path to the artifact being assembled.
+    seed
+        The seed for the pseudo-random number generator used to generate the
+        random samples.
+
     """
-    year_start = 2011
-    data_dir_maori = './data/maori'
-    data_dir_nonmaori = './data/non-maori'
+    data_dir_non_maori = get_data_dir('non-maori')
+    data_dir_maori = get_data_dir('maori')
     prng = np.random.RandomState(seed=seed)
     logger = logging.getLogger(__name__)
 
     # Instantiate components for the non-Maori population.
-    p_nm = Population(data_dir_nonmaori, year_start)
-    l_nm = Diseases(data_dir_nonmaori, year_start, p_nm.year_end)
-    t_nm = Tobacco(data_dir_nonmaori, year_start, p_nm.year_end)
+    p_nm = Population(data_dir_non_maori, YEAR_START)
+    l_nm = Diseases(data_dir_non_maori, YEAR_START, p_nm.year_end)
+    t_nm = Tobacco(data_dir_non_maori, YEAR_START, p_nm.year_end)
 
     # Instantiate components for the Maori population.
-    p_m = Population(data_dir_maori, year_start)
-    l_m = Diseases(data_dir_maori, year_start, p_m.year_end)
-    t_m = Tobacco(data_dir_maori, year_start, p_m.year_end)
+    p_m = Population(data_dir_maori, YEAR_START)
+    l_m = Diseases(data_dir_maori, YEAR_START, p_m.year_end)
+    t_m = Tobacco(data_dir_maori, YEAR_START, p_m.year_end)
 
     # Define data structures to record the samples from the unit interval that
     # are used to sample each rate/quantity, so that they can be correlated
@@ -208,20 +134,19 @@ def assemble_tobacco_artifacts(num_draws, seed=49430):
         datetime.datetime.now().strftime("%H:%M:%S")))
 
     for recovery in [20, 0]:
-        nm_artifact_file = nm_artifact_fmt.format(recovery)
-        m_artifact_file = m_artifact_fmt.format(recovery)
+        nm_artifact_file = output_path / nm_artifact_fmt.format(recovery)
+        m_artifact_file = output_path / m_artifact_fmt.format(recovery)
 
         exposure = 'tobacco'
 
         # Initialise each artifact file.
-        for file_name in [nm_artifact_file, m_artifact_file]:
-            if os.path.exists(file_name):
-                os.remove(file_name)
-            hdf.touch(file_name, append=False)
+        for path in [nm_artifact_file, m_artifact_file]:
+            if path.exists():
+                path.unlink()
 
         # Write the data tables to each artifact file.
-        art_nm = Artifact(nm_artifact_file)
-        art_m = Artifact(m_artifact_file)
+        art_nm = Artifact(str(nm_artifact_file))
+        art_m = Artifact(str(m_artifact_file))
 
         logger.info('{} Writing population tables'.format(
             datetime.datetime.now().strftime("%H:%M:%S")))

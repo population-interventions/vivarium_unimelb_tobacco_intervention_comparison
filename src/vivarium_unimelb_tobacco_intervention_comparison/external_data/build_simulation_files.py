@@ -5,17 +5,17 @@ This script generates the simulation definition files for each experiment.
 """
 
 import jinja2
-import sys
+
+from .utilities import get_model_specification_template_file
 
 
-
-def main(args=None):
+def create_model_specifications(output_dir):
     """
     Construct the data artifacts requires for the tobacco simulations.
     """
 
-    template_file = 'yaml_template.in'
-    with open(template_file, 'r') as f:
+    template_file = get_model_specification_template_file()
+    with template_file.open('r') as f:
         template_contents = f.read()
 
     template = jinja2.Template(template_contents,
@@ -41,11 +41,13 @@ def main(args=None):
     for population in populations:
         for (delay, tobacco_prev) in baus:
             for interv_label, interv_class in interventions.items():
-                out_file = out_format.format(population, delay,
-                                             tobacco_prev, interv_label)
-                basename = out_file[:-5]
+                out_file = output_dir / out_format.format(population, delay,
+                                                          tobacco_prev,
+                                                          interv_label)
+
                 template_args = {
-                    'basename': basename,
+                    'output_root': str(out_file.parent.parent),
+                    'basename': out_file.stem,
                     'population': population,
                     'constant_prevalence': tobacco_prev == 'constant',
                     'delay': delay,
@@ -55,11 +57,5 @@ def main(args=None):
                 if interv_class is None:
                     del template_args['intervention_class']
                 out_content = template.render(template_args)
-                with open(out_file, 'w') as f:
+                with out_file.open('w') as f:
                     f.write(out_content)
-
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
