@@ -340,6 +340,11 @@ def write_table(artifact, path, data):
     logger = logging.getLogger(__name__)
     logger.info('{} Writing table {} to {}'.format(
         datetime.datetime.now().strftime("%H:%M:%S"), path, artifact.path))
+
+    #Add age,sex,year etc columns to multi index
+    col_index_filters = ['year','age','sex','year_start','year_end','age_group_start','age_group_end']
+    data.set_index([col_name for col_name in data.columns if col_name in col_index_filters], inplace =True)
+    
     artifact.write(path, data)
 
 
