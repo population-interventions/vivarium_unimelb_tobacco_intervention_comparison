@@ -45,7 +45,7 @@ class Population:
 
     def get_population(self):
         """Return the initial population size for each stratum."""
-        cols = ['year', 'age', 'sex', 'population', 'bau_population']
+        cols = ['year', 'age', 'sex', 'population']
         # Retain only those strata for whom the population size is defined.
         df = self._data.loc[self._data['population'].notna(), cols].copy()
         df = df.rename(columns = {'population': 'value'})
