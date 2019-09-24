@@ -4,6 +4,7 @@ import os
 from pathlib import Path
 
 import numpy as np
+import pandas as pd
 from vivarium_public_health.dataset_manager import hdf
 from vivarium_public_health.dataset_manager.artifact import Artifact
 
@@ -345,6 +346,11 @@ def write_table(artifact, path, data):
     col_index_filters = ['year','age','sex','year_start','year_end','age_group_start','age_group_end']
     data.set_index([col_name for col_name in data.columns if col_name in col_index_filters], inplace =True)
     
+    #Convert wide to long for tobacco
+    if 'value' not in data.columns:
+        data = pd.melt(data.reset_index(), id_vars=data.index.names,var_name = 'measure').\
+        set_index(data.index.names+['measure'])
+
     artifact.write(path, data)
 
 
