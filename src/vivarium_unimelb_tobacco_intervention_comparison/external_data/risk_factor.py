@@ -538,6 +538,7 @@ class Tobacco:
                                       self._initial_rates, 'incidence',
                                       self._prev, self._apc, 1e3,
                                       rate_dist, samples)
+        df = df.rename(columns={'incidence': 'value'})
         return df
 
     def sample_r_from(self, rate_dist, samples):
@@ -546,6 +547,7 @@ class Tobacco:
                                       self._initial_rates, 'remission',
                                       self._prev, None, 0,
                                       rate_dist, samples)
+        df = df.rename(columns={'remission': 'value'})
         return df
 
     def load_initial_tobacco_rates(self):

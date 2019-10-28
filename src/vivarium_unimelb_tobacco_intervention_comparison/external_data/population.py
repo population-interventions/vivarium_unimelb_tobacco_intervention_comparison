@@ -45,9 +45,10 @@ class Population:
 
     def get_population(self):
         """Return the initial population size for each stratum."""
-        cols = ['year', 'age', 'sex', 'population', 'bau_population']
+        cols = ['year', 'age', 'sex', 'population']
         # Retain only those strata for whom the population size is defined.
         df = self._data.loc[self._data['population'].notna(), cols].copy()
+        df = df.rename(columns = {'population': 'value'})
         return df
 
     def sample_disability_rate_from(self, rate_dist, samples):
@@ -60,13 +61,14 @@ class Population:
         df = self._data.rename(columns={'disability_rate': 'rate'})
         df = sample_fixed_rate_from(self.year_start, self.year_end,
                                     df, 'rate',
-                                    rate_dist, samples)
+                                    rate_dist, samples)                          
+        df = df.rename(columns = {'rate': 'value'})
         return df
 
     def get_disability_rate(self):
         """Return the disability rate for each stratum."""
         df = self._data[['age', 'sex', 'disability_rate']]
-        df = df.rename(columns={'disability_rate': 'rate'})
+        df = df.rename(columns={'disability_rate': 'value'})
 
         # Replace 'age' with age groups.
         df = df.rename(columns={'age': 'age_group_start'})
@@ -110,8 +112,8 @@ class Population:
         # - ACMR = BASE_ACMR * e^(APC * (year - 2011))
         df_apc = self.get_acmr_apc()
         df_acmr = self._data[['age', 'sex', 'mortality_rate']]
-        df_acmr = df_acmr.rename(columns={'mortality_rate': 'rate'})
-        base_acmr = df_acmr['rate'].copy()
+        df_acmr = df_acmr.rename(columns={'mortality_rate': 'value'})
+        base_acmr = df_acmr['value'].copy()
 
         # Replace 'age' with age groups.
         df_acmr = df_acmr.rename(columns={'age': 'age_group_start'})
@@ -131,12 +133,12 @@ class Population:
                 year_apc = df_apc[df_apc.year == year]
                 apc = year_apc['value'].values
                 scale = np.exp(apc * (year - self.year_start))
-                df_acmr.loc[:, 'rate'] = base_acmr * scale
+                df_acmr.loc[:, 'value'] = base_acmr * scale
             else:
                 # NOTE: use the same scale for this cohort as per the previous
                 # year; shift by 2 because there are male and female cohorts.
                 scale[2:] = scale[:-2]
-                df_acmr.loc[:, 'rate'] = base_acmr * scale
+                df_acmr.loc[:, 'value'] = base_acmr * scale
             df_acmr['year_start'] = year
             df_acmr['year_end'] = year + 1
             tables.append(df_acmr.copy())

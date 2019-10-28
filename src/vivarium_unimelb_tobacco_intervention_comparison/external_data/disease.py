@@ -176,7 +176,7 @@ class Chronic:
         df.insert(df.columns.get_loc('age_group_start') + 1,
                   'age_group_end',
                   df['age_group_start'] + 1)
-
+        df = df.rename(columns={'i': 'value','r': 'value','f': 'value'})
         return df
 
     def sample_i_from(self, rate_dist, apc_dist, rate_samples, apc_samples):
@@ -186,6 +186,7 @@ class Chronic:
                                       self._apc, self._num_apc_years,
                                       rate_dist, apc_dist,
                                       rate_samples, apc_samples)
+        df = df.rename(columns={'i': 'value'})
         return df
 
     def sample_r_from(self, rate_dist, apc_dist, rate_samples, apc_samples):
@@ -195,6 +196,7 @@ class Chronic:
                                       self._apc, self._num_apc_years,
                                       rate_dist, apc_dist,
                                       rate_samples, apc_samples)
+        df = df.rename(columns={'r': 'value'})
         return df
 
     def sample_f_from(self, rate_dist, apc_dist, rate_samples, apc_samples):
@@ -204,6 +206,7 @@ class Chronic:
                                       self._apc, self._num_apc_years,
                                       rate_dist, apc_dist,
                                       rate_samples, apc_samples)
+        df = df.rename(columns={'f': 'value'})
         return df
 
     def sample_yld_from(self, rate_dist, apc_dist, rate_samples, apc_samples):
@@ -213,6 +216,7 @@ class Chronic:
                                       self._apc, self._num_apc_years,
                                       rate_dist, apc_dist,
                                       rate_samples, apc_samples)
+        df = df.rename(columns={'DR': 'value'})
         return df
 
     def sample_prevalence_from(self, rate_dist, rate_samples):
@@ -224,6 +228,7 @@ class Chronic:
         df.insert(df.columns.get_loc('age_group_start') + 1,
                   'age_group_end',
                   df['age_group_start'] + 1)
+        df = df.rename(columns={'prev': 'value'})
         return df
 
 
@@ -271,6 +276,7 @@ class Acute:
         col = 'excess_mortality'
         df = sample_fixed_rate_from(self._year_start, self._year_end,
                                     self._data, col, rate_dist, samples)
+        df = df.rename(columns={'excess_mortality': 'value'})
         return df
 
     def sample_disability_from(self, rate_dist, samples):
@@ -278,6 +284,7 @@ class Acute:
         col = 'disability_rate'
         df = sample_fixed_rate_from(self._year_start, self._year_end,
                                     self._data, col, rate_dist, samples)
+        df = df.rename(columns={'disability_rate': 'value'})
         return df
 
 
