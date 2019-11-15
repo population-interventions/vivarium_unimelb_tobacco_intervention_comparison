@@ -25,6 +25,8 @@ configuration:
         # population.
         artifact_path: {{ output_root }}/artifacts/mslt_tobacco_{{ population }}_{{ delay }}-years.hdf
         input_draw_number: 0
+    interpolation:
+        validate: False
     population:
         # The population size here is the number of cohorts.
         # There are 22 age bins (0-4, 5-9, ..., 105-109) for females and for
