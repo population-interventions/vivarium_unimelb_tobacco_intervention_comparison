@@ -24,7 +24,7 @@ def check_for_bin_edges(df):
     are defined as table columns.
     """
 
-    if 'age_group_start' in df.columns and 'year_start' in df.columns:
+    if 'age_start' in df.columns and 'year_start' in df.columns:
         return df
     else:
         raise ValueError('Table does not have bins')
