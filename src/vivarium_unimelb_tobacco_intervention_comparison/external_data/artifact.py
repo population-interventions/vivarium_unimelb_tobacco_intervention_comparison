@@ -343,7 +343,7 @@ def write_table(artifact, path, data):
         datetime.datetime.now().strftime("%H:%M:%S"), path, artifact.path))
 
     #Add age,sex,year etc columns to multi index
-    col_index_filters = ['year','age','sex','year_start','year_end','age_group_start','age_group_end']
+    col_index_filters = ['year','age','sex','year_start','year_end','age_start','age_end']
     data.set_index([col_name for col_name in data.columns if col_name in col_index_filters], inplace =True)
     
     #Convert wide to long for tobacco

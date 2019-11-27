@@ -71,17 +71,17 @@ class Population:
         df = df.rename(columns={'disability_rate': 'value'})
 
         # Replace 'age' with age groups.
-        df = df.rename(columns={'age': 'age_group_start'})
-        df.insert(df.columns.get_loc('age_group_start') + 1,
-                  'age_group_end',
-                  df['age_group_start'] + 1)
+        df = df.rename(columns={'age': 'age_start'})
+        df.insert(df.columns.get_loc('age_start') + 1,
+                  'age_end',
+                  df['age_start'] + 1)
 
         # These values apply at each year of the simulation, so we only need
         # to define a single bin.
         df.insert(0, 'year_start', self.year_start)
         df.insert(1, 'year_end', self.year_end + 1)
 
-        df = df.sort_values(['year_start', 'age_group_start', 'sex'])
+        df = df.sort_values(['year_start', 'age_start', 'sex'])
         df = df.reset_index(drop=True)
 
         return df
@@ -116,10 +116,10 @@ class Population:
         base_acmr = df_acmr['value'].copy()
 
         # Replace 'age' with age groups.
-        df_acmr = df_acmr.rename(columns={'age': 'age_group_start'})
-        df_acmr.insert(df_acmr.columns.get_loc('age_group_start') + 1,
-                       'age_group_end',
-                       df_acmr['age_group_start'] + 1)
+        df_acmr = df_acmr.rename(columns={'age': 'age_start'})
+        df_acmr.insert(df_acmr.columns.get_loc('age_start') + 1,
+                       'age_end',
+                       df_acmr['age_start'] + 1)
 
         # These values apply at each year of the simulation, so we only need
         # to define a single bin.
@@ -143,7 +143,7 @@ class Population:
             df_acmr['year_end'] = year + 1
             tables.append(df_acmr.copy())
 
-        df = pd.concat(tables).sort_values(['year_start', 'age_group_start',
+        df = pd.concat(tables).sort_values(['year_start', 'age_start',
                                             'sex'])
         df = df.reset_index(drop=True)
 
