@@ -5,8 +5,8 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from vivarium_public_health.dataset_manager import hdf
-from vivarium_public_health.dataset_manager.artifact import Artifact
+from vivarium.framework.artifact import hdf
+from vivarium.framework.artifact import Artifact
 
 from vivarium_unimelb_tobacco_intervention_comparison.external_data.population import Population
 from vivarium_unimelb_tobacco_intervention_comparison.external_data.disease import Diseases
