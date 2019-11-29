@@ -93,12 +93,12 @@ def sample_tobacco_rate_from(year_start, year_end, data, rate_name, prev_data,
         df['year_end'] = year_end + 1
 
     # Replace 'age' with age groups.
-    df = df.rename(columns={'age': 'age_group_start'})
-    df.insert(df.columns.get_loc('age_group_start') + 1,
-              'age_group_end',
-              df['age_group_start'] + 1)
+    df = df.rename(columns={'age': 'age_start'})
+    df.insert(df.columns.get_loc('age_start') + 1,
+              'age_end',
+              df['age_start'] + 1)
 
-    df = df.sort_values(['year_start', 'age_group_start', 'sex', 'draw'])
+    df = df.sort_values(['year_start', 'age_start', 'sex', 'draw'])
     df = df.reset_index(drop=True)
 
     return df
@@ -216,15 +216,15 @@ class Tobacco:
         df = pd.concat(tables)
 
         # Replace 'age' with age groups.
-        df = df.rename(columns={'age': 'age_group_start'})
-        df.insert(df.columns.get_loc('age_group_start') + 1,
-                  'age_group_end',
-                  df['age_group_start'] + 1)
+        df = df.rename(columns={'age': 'age_start'})
+        df.insert(df.columns.get_loc('age_start') + 1,
+                  'age_end',
+                  df['age_start'] + 1)
 
-        df = df.sort_values(['year_start', 'age_group_start', 'sex'])
+        df = df.sort_values(['year_start', 'age_start', 'sex'])
         df = df.reset_index(drop=True)
         df = df.loc[:, ['year_start', 'year_end',
-                        'age_group_start', 'age_group_end',
+                        'age_start', 'age_end',
                         'sex', 'draw',
                         'incidence_effect', 'remission_effect']]
 
@@ -358,12 +358,12 @@ class Tobacco:
         df.insert(1, 'year_end', self._year_end + 1)
 
         # Replace 'age' with age groups.
-        df = df.rename(columns={'age': 'age_group_start'})
-        df.insert(df.columns.get_loc('age_group_start') + 1,
-                  'age_group_end',
-                  df['age_group_start'] + 1)
+        df = df.rename(columns={'age': 'age_start'})
+        df.insert(df.columns.get_loc('age_start') + 1,
+                  'age_end',
+                  df['age_start'] + 1)
 
-        df = df.sort_values(['year_start', 'age_group_start', 'sex'])
+        df = df.sort_values(['year_start', 'age_start', 'sex'])
         df = df.reset_index(drop=True)
 
         return df
@@ -381,12 +381,12 @@ class Tobacco:
                   df['year_start'] + 1)
 
         # Replace 'age' with age groups.
-        df = df.rename(columns={'age': 'age_group_start'})
-        df.insert(df.columns.get_loc('age_group_start') + 1,
-                  'age_group_end',
-                  df['age_group_start'] + 1)
+        df = df.rename(columns={'age': 'age_start'})
+        df.insert(df.columns.get_loc('age_start') + 1,
+                  'age_end',
+                  df['age_start'] + 1)
 
-        df = df.sort_values(['year_start', 'age_group_start', 'sex'])
+        df = df.sort_values(['year_start', 'age_start', 'sex'])
         df = df.reset_index(drop=True)
 
         if np.any(df.isna()):
@@ -419,12 +419,12 @@ class Tobacco:
                   self._year_end + 1)
 
         # Replace 'age' with age groups.
-        df = df.rename(columns={'age': 'age_group_start'})
-        df.insert(df.columns.get_loc('age_group_start') + 1,
-                  'age_group_end',
-                  df['age_group_start'] + 1)
+        df = df.rename(columns={'age': 'age_start'})
+        df.insert(df.columns.get_loc('age_start') + 1,
+                  'age_end',
+                  df['age_start'] + 1)
 
-        df = df.sort_values(['year_start', 'age_group_start', 'sex'])
+        df = df.sort_values(['year_start', 'age_start', 'sex'])
         df = df.reset_index(drop=True)
 
         if np.any(df.isna()):
@@ -452,12 +452,12 @@ class Tobacco:
         df.insert(1, 'year_end', self._year_end + 1)
 
         # Replace 'age' with age groups.
-        df = df.rename(columns={'age': 'age_group_start'})
-        df.insert(df.columns.get_loc('age_group_start') + 1,
-                  'age_group_end',
-                  df['age_group_start'] + 1)
+        df = df.rename(columns={'age': 'age_start'})
+        df.insert(df.columns.get_loc('age_start') + 1,
+                  'age_end',
+                  df['age_start'] + 1)
 
-        df = df.sort_values(['year_start', 'age_group_start', 'sex'])
+        df = df.sort_values(['year_start', 'age_start', 'sex'])
         df = df.reset_index(drop=True)
 
         if np.any(df.isna()):
@@ -479,12 +479,12 @@ class Tobacco:
         df.insert(1, 'year_end', self._year_end + 1)
 
         # Replace 'age' with age groups.
-        df = df.rename(columns={'age': 'age_group_start'})
-        df.insert(df.columns.get_loc('age_group_start') + 1,
-                  'age_group_end',
-                  df['age_group_start'] + 1)
+        df = df.rename(columns={'age': 'age_start'})
+        df.insert(df.columns.get_loc('age_start') + 1,
+                  'age_end',
+                  df['age_start'] + 1)
 
-        df = df.sort_values(['year_start', 'age_group_start', 'sex'])
+        df = df.sort_values(['year_start', 'age_start', 'sex'])
         df = df.reset_index(drop=True)
 
         if np.any(df.isna()):

@@ -77,12 +77,12 @@ def sample_disease_rate_from(year_start, year_end, data, rate_name, apc_data,
         df['year_end'] = year_end + 1
 
     # Replace 'age' with age groups.
-    df = df.rename(columns={'age': 'age_group_start'})
-    df.insert(df.columns.get_loc('age_group_start') + 1,
-              'age_group_end',
-              df['age_group_start'] + 1)
+    df = df.rename(columns={'age': 'age_start'})
+    df.insert(df.columns.get_loc('age_start') + 1,
+              'age_end',
+              df['age_start'] + 1)
 
-    df = df.sort_values(['year_start', 'age_group_start', 'sex', 'draw'])
+    df = df.sort_values(['year_start', 'age_start', 'sex', 'draw'])
     df = df.reset_index(drop=True)
 
     return df
@@ -172,10 +172,10 @@ class Chronic:
         df = df.reset_index(drop=True)
 
         # Replace 'age' with age groups.
-        df = df.rename(columns={'age': 'age_group_start'})
-        df.insert(df.columns.get_loc('age_group_start') + 1,
-                  'age_group_end',
-                  df['age_group_start'] + 1)
+        df = df.rename(columns={'age': 'age_start'})
+        df.insert(df.columns.get_loc('age_start') + 1,
+                  'age_end',
+                  df['age_start'] + 1)
         df = df.rename(columns={'i': 'value','r': 'value','f': 'value'})
         return df
 
@@ -224,10 +224,10 @@ class Chronic:
         df = sample_column_long(self._data, 'prev', rate_dist, rate_samples)
         df.insert(0, 'year_start', self._year_start)
         df.insert(1, 'year_end', self._year_start + 1)
-        df = df.rename(columns={'age': 'age_group_start'})
-        df.insert(df.columns.get_loc('age_group_start') + 1,
-                  'age_group_end',
-                  df['age_group_start'] + 1)
+        df = df.rename(columns={'age': 'age_start'})
+        df.insert(df.columns.get_loc('age_start') + 1,
+                  'age_end',
+                  df['age_start'] + 1)
         df = df.rename(columns={'prev': 'value'})
         return df
 
@@ -258,15 +258,15 @@ class Acute:
         tables = []
         df = self._data.copy()
 
-        df = df.rename(columns={'age': 'age_group_start'})
-        df.insert(df.columns.get_loc('age_group_start') + 1,
-                      'age_group_end',
-                      df['age_group_start'] + 1)
+        df = df.rename(columns={'age': 'age_start'})
+        df.insert(df.columns.get_loc('age_start') + 1,
+                      'age_end',
+                      df['age_start'] + 1)
 
         df.insert(0, 'year_start', self._year_start)
         df.insert(1, 'year_end', self._year_end + 1)
 
-        df = df.sort_values(['year_start', 'age_group_start', 'sex'])
+        df = df.sort_values(['year_start', 'age_start', 'sex'])
         df = df.reset_index(drop=True)
 
         return df

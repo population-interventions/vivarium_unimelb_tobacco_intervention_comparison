@@ -5,8 +5,8 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from vivarium_public_health.dataset_manager import hdf
-from vivarium_public_health.dataset_manager.artifact import Artifact
+from vivarium.framework.artifact import hdf
+from vivarium.framework.artifact import Artifact
 
 from vivarium_unimelb_tobacco_intervention_comparison.external_data.population import Population
 from vivarium_unimelb_tobacco_intervention_comparison.external_data.disease import Diseases
@@ -24,7 +24,7 @@ def check_for_bin_edges(df):
     are defined as table columns.
     """
 
-    if 'age_group_start' in df.columns and 'year_start' in df.columns:
+    if 'age_start' in df.columns and 'year_start' in df.columns:
         return df
     else:
         raise ValueError('Table does not have bins')
@@ -343,7 +343,7 @@ def write_table(artifact, path, data):
         datetime.datetime.now().strftime("%H:%M:%S"), path, artifact.path))
 
     #Add age,sex,year etc columns to multi index
-    col_index_filters = ['year','age','sex','year_start','year_end','age_group_start','age_group_end']
+    col_index_filters = ['year','age','sex','year_start','year_end','age_start','age_end']
     data.set_index([col_name for col_name in data.columns if col_name in col_index_filters], inplace =True)
     
     #Convert wide to long for tobacco

@@ -1,9 +1,3 @@
-plugins:
-    optional:
-        data:
-            controller: "vivarium_public_health.dataset_manager.ArtifactManager"
-            builder_interface: "vivarium_public_health.dataset_manager.ArtifactManagerInterface"
-
 components:
     vivarium_public_health:
         mslt:
@@ -42,6 +36,7 @@ configuration:
     input_data:
         artifact_path: {{ output_root }}/artifacts/mslt_tobacco_{{ population }}_{{ delay }}-years.hdf
         input_draw_number: 0
+        location: ''
     interpolation:
         validate: False
     observer:

@@ -88,12 +88,12 @@ def sample_fixed_rate_from(year_start, year_end, data, rate_name,
 
     df.insert(0, 'year_start', year_start)
     df.insert(1, 'year_end', year_end + 1)
-    df = df.rename(columns={'age': 'age_group_start'})
-    df.insert(df.columns.get_loc('age_group_start') + 1,
-              'age_group_end',
-              df['age_group_start'] + 1)
+    df = df.rename(columns={'age': 'age_start'})
+    df.insert(df.columns.get_loc('age_start') + 1,
+              'age_end',
+              df['age_start'] + 1)
 
-    df = df.sort_values(['year_start', 'age_group_start', 'sex', 'draw'])
+    df = df.sort_values(['year_start', 'age_start', 'sex', 'draw'])
     df = df.reset_index(drop=True)
 
     if np.any(df.isna()):
