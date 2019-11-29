@@ -37,6 +37,8 @@ configuration:
         artifact_path: {{ output_root }}/artifacts/mslt_tobacco_{{ population }}_{{ delay }}-years.hdf
         input_draw_number: 0
         location: ''
+    interpolation:
+        validate: False
     observer:
         output_prefix: results/{{ basename }}
     population:
