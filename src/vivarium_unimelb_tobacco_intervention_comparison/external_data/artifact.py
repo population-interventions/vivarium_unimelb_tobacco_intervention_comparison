@@ -294,10 +294,10 @@ def assemble_tobacco_artifacts(num_draws, output_path: Path, seed: int = RANDOM_
                               if c != 'remission_effect']
             remission_cols = [c for c in tob_tax_nm.columns
                               if c != 'incidence_effect']
-            write_table(art_nm, 'risk_factor.{}.tax_effect_incidence'.format(name),
-                         tob_tax_nm.loc[:, incidence_cols])
-            write_table(art_nm, 'risk_factor.{}.tax_effect_remission'.format(name),
-                         tob_tax_nm.loc[:, remission_cols])
+            df = tob_tax_nm.loc[:, incidence_cols].rename(columns={'incidence_effect': 'value'})
+            write_table(art_nm, 'risk_factor.{}.tax_effect_incidence'.format(name), df)
+            df = tob_tax_nm.loc[:, remission_cols].rename(columns={'remission_effect': 'value'})
+            write_table(art_nm, 'risk_factor.{}.tax_effect_remission'.format(name), df)
             del tob_tax_nm
 
             logger.info('{}     Tax effects (Maori)'.format(
@@ -313,10 +313,10 @@ def assemble_tobacco_artifacts(num_draws, output_path: Path, seed: int = RANDOM_
                               if c != 'remission_effect']
             remission_cols = [c for c in tob_tax_m.columns
                               if c != 'incidence_effect']
-            write_table(art_m, 'risk_factor.{}.tax_effect_incidence'.format(name),
-                        tob_tax_m.loc[:, incidence_cols])
-            write_table(art_m, 'risk_factor.{}.tax_effect_remission'.format(name),
-                        tob_tax_m.loc[:, remission_cols])
+            df = tob_tax_m.loc[:, incidence_cols].rename(columns={'incidence_effect': 'value'})
+            write_table(art_m, 'risk_factor.{}.tax_effect_incidence'.format(name), df)
+            df = tob_tax_m.loc[:, remission_cols].rename(columns={'remission_effect': 'value'})
+            write_table(art_m, 'risk_factor.{}.tax_effect_remission'.format(name), df)
             del tob_tax_m
             del tob_elast_nm
             del tob_elast_m
