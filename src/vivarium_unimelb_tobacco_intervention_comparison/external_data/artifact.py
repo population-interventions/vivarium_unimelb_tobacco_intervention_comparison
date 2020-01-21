@@ -289,15 +289,18 @@ def assemble_tobacco_artifacts(num_draws, output_path: Path, seed: int = RANDOM_
             tob_elast_nm = t_nm.sample_price_elasticity_from(
                 dist_tob_elast, smp_tob_elast)
 
+            incidence_effect_col = 'incidence_effect'
+            remission_effect_col = 'remission_effect'
+
             tob_tax_nm = t_nm.sample_tax_effects_from_elasticity_wide(tob_elast_nm)
             incidence_cols = [c for c in tob_tax_nm.columns
-                              if c != 'remission_effect']
+                              if c != remission_effect_col]
             remission_cols = [c for c in tob_tax_nm.columns
-                              if c != 'incidence_effect']
-            write_table(art_nm, 'risk_factor.{}.tax_effect_incidence'.format(name),
-                         tob_tax_nm.loc[:, incidence_cols])
-            write_table(art_nm, 'risk_factor.{}.tax_effect_remission'.format(name),
-                         tob_tax_nm.loc[:, remission_cols])
+                              if c != incidence_effect_col]
+            df = tob_tax_nm.loc[:, incidence_cols].rename(columns={incidence_effect_col: 'value'})
+            write_table(art_nm, 'risk_factor.{}.tax_effect_incidence'.format(name), df)
+            df = tob_tax_nm.loc[:, remission_cols].rename(columns={remission_effect_col: 'value'})
+            write_table(art_nm, 'risk_factor.{}.tax_effect_remission'.format(name), df)
             del tob_tax_nm
 
             logger.info('{}     Tax effects (Maori)'.format(
@@ -310,13 +313,13 @@ def assemble_tobacco_artifacts(num_draws, output_path: Path, seed: int = RANDOM_
 
             tob_tax_m = t_m.sample_tax_effects_from_elasticity_wide(tob_elast_m)
             incidence_cols = [c for c in tob_tax_m.columns
-                              if c != 'remission_effect']
+                              if c != remission_effect_col]
             remission_cols = [c for c in tob_tax_m.columns
-                              if c != 'incidence_effect']
-            write_table(art_m, 'risk_factor.{}.tax_effect_incidence'.format(name),
-                        tob_tax_m.loc[:, incidence_cols])
-            write_table(art_m, 'risk_factor.{}.tax_effect_remission'.format(name),
-                        tob_tax_m.loc[:, remission_cols])
+                              if c != incidence_effect_col]
+            df = tob_tax_m.loc[:, incidence_cols].rename(columns={incidence_effect_col: 'value'})
+            write_table(art_m, 'risk_factor.{}.tax_effect_incidence'.format(name), df)
+            df = tob_tax_m.loc[:, remission_cols].rename(columns={remission_effect_col: 'value'})
+            write_table(art_m, 'risk_factor.{}.tax_effect_remission'.format(name), df)
             del tob_tax_m
             del tob_elast_nm
             del tob_elast_m
