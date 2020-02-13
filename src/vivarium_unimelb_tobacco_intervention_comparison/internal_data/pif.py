@@ -146,9 +146,14 @@ class PIFCalculator:
                                                                                     scenario))
 
             pif_index = pd.MultiIndex.from_tuples(self.pif_table.index).set_names(['age','sex','year'])
-            output_table = self.pif_table.set_index(pif_index, drop=True)[disease]
-
-            output_table.reset_index().to_csv(pif_table_filename, index=False)
+            table = (
+                           self.pif_table
+                           .set_index(pif_index, drop=True)
+                           .rename(columns={disease:'value'})  
+            )             
+            
+            output_series = table['value']
+            output_series.reset_index().to_csv(pif_table_filename, index=False)
 
 
 def make_directory(dir_name):
