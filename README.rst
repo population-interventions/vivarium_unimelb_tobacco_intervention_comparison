@@ -16,7 +16,7 @@ Installation
 
 To set up a new research environment, open up a terminal and run::
 
-    $> conda create --name=mslt_tobacco python=3.6 hdf5
+    $> conda create --name=mslt_tobacco python=3.6
     ...standard conda install stuff...
     $> conda activate mslt_tobacco
     (mslt_tobacco) $> git clone git@github.com:ihmeuw/vivarium_unimelb_tobacco_intervention_comparison.git
