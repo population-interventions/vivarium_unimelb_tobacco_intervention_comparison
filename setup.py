@@ -22,6 +22,7 @@ if __name__ == "__main__":
 
         # These are pinned for internal dependencies on IHME libraries
         'numpy<=1.15.4',
+        'numexpr==2.7.1',
         'tables<=3.3',
         'pandas<0.25',
         
